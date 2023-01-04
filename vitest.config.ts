@@ -1,9 +1,10 @@
 import { defineConfig } from 'vitest/config';
-import clearVitest from './scripts/vite-plugin-clear-vitest';
+// import clearVitest from './scripts/vite-plugin-clear-vitest';
 
-const TEST = typeof process !== 'undefined' && process.env.NODE_ENV === 'test';
-const event = process.env.npm_lifecycle_event;
-const WATCH_TEST = TEST && event === 'test';
+// const TEST =
+//   typeof process !== 'undefined' &&
+//   process.env.NODE_ENV === 'test' &&
+//   process.env.npm_lifecycle_event === 'test';
 
 export default defineConfig({
   test: {
@@ -19,6 +20,6 @@ export default defineConfig({
   },
   plugins: [
     // Clear terminal plugin for vitest
-    WATCH_TEST && clearVitest(),
+    // TEST && clearVitest(),
   ],
 });
