@@ -29,5 +29,5 @@
     "types": ["@types/node", "vitest/globals"],
   },
   "include": ["src/*", "vitest.config.ts"],
-  "typeRoots": ["./node_modules/@types", "./src/types"]
+  "typeRoots": ["./node_modules/@types"]
 }
