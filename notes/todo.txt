@@ -1,6 +1,7 @@
 - Convert tests to vitest
 - Get tests to pass
 - Compare types to: https://github.com/matthewp/robot/blob/main/index.d.ts
+  - Get types working
 - Fix TODO's
   - Remove all this references
 - Rename transition to `on`

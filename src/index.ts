@@ -10,21 +10,21 @@ function valueEnumerableWritable(value: unknown) {
 
 type Fn<T = unknown, R = unknown> = (...args: T[]) => R;
 
+type State = {
+  final: boolean;
+  enter: (machine: Machine, service: Service, event?: Event) => Machine;
+  transitions: Map<string, Transition[]>;
+};
+
 type Machine = {
   current: string;
-  context: (context: unknown, event: Event) => unknown;
+  context: (context: unknown, event?: Event) => unknown;
   original?: Machine | undefined;
   state: {
     name: string;
-    value:
-      | {
-          final: boolean;
-          enter: (machine: Machine, service: Service, event: Event) => Machine;
-          transitions: Map<string, Transition[]>;
-        }
-      | undefined;
+    value: State | undefined;
   };
-  states: Record<string, Machine['state']>;
+  states: Record<string, State>;
 };
 type Service = {
   context: object;
@@ -48,6 +48,22 @@ type Transition = {
   transitions: Transition[];
   guards: (context: unknown, event: Event) => boolean;
   reducers: (context: unknown, event: Event) => object;
+};
+
+export type GuardFunction<C, E> = (context: C, event: E) => boolean;
+export type ActionFunction<C, E> = (context: C, event: E) => unknown;
+export type ReduceFunction<C, E> = (context: C, event: E) => C;
+
+export type Action<C, E> = {
+  fn: ActionFunction<C, E>;
+};
+
+export type Reducer<C, E> = {
+  fn: ReduceFunction<C, E>;
+};
+
+export type Guard<C, E> = {
+  fn: GuardFunction<C, E>;
 };
 
 export const d = {} as {
@@ -90,7 +106,7 @@ function fnType(this: object | null, fn: Fn<object>) {
 }
 
 const reduceType = {};
-export const reduce = fnType.bind(reduceType);
+export const reduce = fnType.bind(reduceType) as (fn: Fn<object, unknown>) => Transition;
 export const action = (fn: Fn<object, object>) => reduce((ctx, ev) => Boolean(~fn(ctx, ev) && ctx));
 
 const guardType = {};
@@ -100,12 +116,7 @@ function filter(type: object, arr: Transition[]) {
   return arr.filter((value) => type.isPrototypeOf(value));
 }
 
-function makeTransition(
-  this: object | null,
-  from: string | null,
-  to: string,
-  ...args: Transition[]
-) {
+function makeTransition(this: Transition, from: string | null, to: string, ...args: Transition[]) {
   const guards = stack(
     filter(guardType, args).map((t) => t.fn),
     truthy,
@@ -125,8 +136,8 @@ function makeTransition(
   });
 }
 
-const transitionType = {};
-const immediateType = {};
+const transitionType = {} as Transition;
+const immediateType = {} as Transition;
 export const transition = makeTransition.bind(transitionType);
 export const immediate = makeTransition.bind(immediateType, null);
 
@@ -150,8 +161,9 @@ function transitionsToMap(transitions: Transition[]) {
   return m;
 }
 
-const stateType = { enter: identity };
-export function state(...args: Transition[]) {
+// TODO: Fix typing
+const stateType = { enter: identity } as unknown as State;
+export function state(...args: Transition[]): State {
   const transitions = filter(transitionType, args);
   const immediates = filter(immediateType, args);
   const desc = {
@@ -174,7 +186,6 @@ const invokeFnType = {
         machine: valueEnumerable(rn),
         transitions: valueEnumerable(this.transitions),
       });
-      // @ts-expect-error - TODO: fix this type
       return machine.enter(machine2, service, event);
     }
 
@@ -185,7 +196,7 @@ const invokeFnType = {
     }
     return machine2;
   },
-};
+} as State;
 
 const invokeMachineType = {
   enter(this: Service, machine: Machine, service: Service, event: Event) {
@@ -209,9 +220,9 @@ const invokeMachineType = {
     }
     return machine;
   },
-};
+} as State;
 
-export function invoke(fn: Fn, ...transitions: Transition[]) {
+export function invoke(fn: Fn | Machine, ...transitions: Transition[]) {
   const t = valueEnumerable(transitionsToMap(transitions));
   return machine.isPrototypeOf(fn)
     ? create(invokeMachineType, {
@@ -236,23 +247,32 @@ const machine: Machine = {
   },
 };
 
+type Context = Fn<Record<string, unknown>>;
+
+export function createMachine(states: Machine['states'], contextFn?: Context): Machine;
 export function createMachine(
-  current: string | undefined,
+  current: string,
   states: Machine['states'],
-  contextFn = empty
+  contextFn?: Context
+): Machine;
+export function createMachine(
+  current: string | Machine['states'],
+  states?: Machine['states'] | Context,
+  contextFn: Context = empty
 ) {
-  if (typeof current !== 'string') {
+  if (typeof current === 'string') {
+    if (typeof states === 'object' && d._create) d._create(current, states);
     return create(machine, {
-      context: valueEnumerable(states || empty),
-      current: valueEnumerable(Object.keys(states)[0]),
-      states: valueEnumerable(current),
+      context: valueEnumerable(contextFn),
+      current: valueEnumerable(current),
+      states: valueEnumerable(states),
     });
   }
-  if (d._create) d._create(current, states);
+  if (d._create) d._create(Object.keys(current)[0] ?? '', current);
   return create(machine, {
-    context: valueEnumerable(contextFn),
-    current: valueEnumerable(current),
-    states: valueEnumerable(states),
+    context: valueEnumerable(states || empty),
+    current: valueEnumerable(Object.keys(current)[0]),
+    states: valueEnumerable(current),
   });
 }
 
@@ -300,17 +320,16 @@ function send(service: Service, event: Event) {
 const service: Service = {
   send(event: Event) {
     this.machine = send(this, event);
-
     // TODO detect change
-    this.onChange(this);
+    this.onChange?.(this);
   },
 } as Service;
 
 export function interpret(
   machine: Machine,
-  onChange: (service: Service) => void,
-  initialContext: object,
-  event: Event
+  onChange?: (service: Service) => void,
+  initialContext?: object,
+  event?: Event
 ): Service {
   const s = Object.create(service, {
     machine: valueEnumerableWritable(machine),

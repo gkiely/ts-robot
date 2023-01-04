@@ -32,7 +32,5 @@ coverage-ts
 *.sln
 *.sw?
 
-# E2E
-/test-results/
-/playwright-report/
-/playwright/.cache/
+# Cache
+.rollup.cache
