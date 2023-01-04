@@ -1,0 +1,105 @@
+{
+  "name": "vite-npm-starter",
+  "type": "module",
+  "private": false,
+  "version": "0.0.0",
+  "author": "Grant Kiely <grant.kiely@gmail.com>",
+  "license": "MIT",
+  "volta": {
+    "node": "18.4.0"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkiely/vite-npm-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gkiely/vite-npm-starter/issues"
+  },
+  "keywords": [
+    "vite",
+    "starter",
+    "typescript"
+  ],
+  "scripts": {
+    "start": "npm run fast-install && npm run dev",
+    "clear-cache": "rm .eslintcache; rm -rf ./node_modules/.cache",
+    "dev": "vite",
+    "fast-install": "npm i --prefer-offline --progress=false --no-audit --no-fund",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "bench": "vitest bench",
+    "test-all": "vitest run",
+    "test-update": "vitest run -u",
+    "tsc": "tsc",
+    "tsc-diagnose": "tsc --extendedDiagnostics",
+    "tsc-list": "tsc --listFilesOnly",
+    "tsw": "tsc --watch",
+    "coverage": "vitest run; npm -s run view-coverage",
+    "view-coverage": "osascript ./scripts/open-browser.scpt 'Code coverage report' 'coverage/index.html'",
+    "install-latest": "npm i $(npm run -s get-latest)",
+    "lint-check": "eslint -c .eslintrc.prod.json --cache --cache-location node_modules/.cache/.eslintcache-prod --ext ts,tsx src --max-warnings=0",
+    "lint-fix": "eslint -c .eslintrc.dev.json --cache --cache-location node_modules/.cache/.eslintcache-dev --fix --ext ts,tsx src",
+    "lint-debug": "time TIMING=1 eslint -c .eslintrc.prod.json --ext ts,tsx src",
+    "get-latest": "vite-node ./scripts/get-latest.ts",
+    "pre-push": "concurrently -r -g 'tsc' 'prettier src --check --cache' 'npm:lint-check' 'npm:test-all'",
+    "pre-commit": "concurrently -r -g 'tsc' 'npm run lint-fix && prettier src --write --cache --loglevel error'",
+    "postinstall": "echo 'npm run pre-commit' > .git/hooks/pre-commit & echo 'npm run pre-push' > .git/hooks/pre-push"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pre-commit",
+    "pre-push": "pre-push"
+  },
+  "dependencies": {
+    "@gkiely/utils": "^0.1.36"
+  },
+  "browserslist": {
+    "development": [
+      "last 1 versions"
+    ]
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "@vitest/coverage-c8": "^0.23.4",
+    "c8": "^7.12.0",
+    "concurrently": "^7.4.0",
+    "eslint": "^8.24.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-escompat": "^3.2.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-jsx-no-leaked-values": "^0.1.22",
+    "eslint-plugin-no-await-in-promise": "^1.1.1",
+    "eslint-plugin-no-only-tests": "^3.0.0",
+    "eslint-plugin-no-state-hooks": "^0.1.25",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-regexp": "^1.9.0",
+    "eslint-plugin-testing-library": "^5.7.0",
+    "eslint-plugin-unicorn": "^43.0.2",
+    "eslint-plugin-validate-jsx-nesting": "^0.1.0",
+    "prettier": "^2.7.1",
+    "rollup-plugin-license": "^3.0.1",
+    "rollup-plugin-typescript-paths": "^1.4.0",
+    "simple-git-hooks": "^2.8.0",
+    "typescript": "^4.8.2",
+    "vite": "^3.1.4",
+    "vite-node": "^0.23.4",
+    "vite-plugin-checker": "^0.5.1",
+    "vitest": "^0.23.4"
+  }
+}

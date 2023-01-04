@@ -1,0 +1,115 @@
+{
+  "env": {
+    "shared-node-browser": true,
+    "es2022": true
+  },
+  "ignorePatterns": ["src/types/global.d.ts"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "tsconfigRootDir": ".",
+    "project": ["./tsconfig.json"]
+  },
+  "plugins": ["@typescript-eslint", "regexp", "fp", "unicorn", "promise"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:escompat/typescript",
+    "plugin:regexp/recommended",
+    "plugin:promise/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:no-await-in-promise/recommended"
+  ],
+  "rules": {
+    "no-sequences": "off",
+    "promise/no-nesting": "off",
+    "promise/always-return": "off",
+    "promise/no-callback-in-promise": "off",
+    "promise/catch-or-return": "warn",
+    "no-undef-init": "warn",
+    "no-console": "warn",
+    "no-debugger": "warn",
+    "no-await-in-loop": "error",
+    "array-callback-return": "warn",
+    "no-constructor-return": "warn",
+    "no-duplicate-imports": "error",
+    "no-unreachable-loop": "error",
+    "no-empty": "warn",
+    "no-unused-private-class-members": "warn",
+    "dot-notation": "warn",
+    "guard-for-in": "error",
+    "max-depth": ["warn", 4],
+    "max-nested-callbacks": ["warn", 4],
+    "max-params": ["warn", 4],
+    "no-alert": "warn",
+    "yoda": "warn",
+    "radix": ["warn", "as-needed"],
+    "prefer-regex-literals": "warn",
+    "prefer-object-spread": "warn",
+    "prefer-arrow-callback": "warn",
+    "no-unneeded-ternary": "error",
+    "object-shorthand": "warn",
+    "default-case": "error",
+    "no-useless-call": "error",
+    "no-eq-null": "error",
+    "no-extra-bind": "error",
+    "no-invalid-this": "error",
+    "no-iterator": "error",
+    "no-param-reassign": "error",
+    "no-shadow-restricted-names": "error",
+    "no-constant-binary-expression": "error",
+    "fp/no-class": "error",
+    "fp/no-this": "error",
+    "regexp/no-unused-capturing-group": "off",
+    "@typescript-eslint/no-unnecessary-type-constraint": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "caughtErrorsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": false
+        }
+      }
+    ],
+    "@typescript-eslint/require-await": "warn",
+    "@typescript-eslint/ban-ts-comment": [
+      "warn",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-nocheck": "allow-with-description"
+      }
+    ],
+    "unicorn/no-document-cookie": "error",
+    "unicorn/prefer-add-event-listener": "error",
+    "unicorn/prefer-array-find": "error",
+    "unicorn/prefer-array-flat": "error",
+    "unicorn/prefer-array-flat-map": "error",
+    "unicorn/prefer-array-some": "error",
+    "unicorn/prefer-date-now": "error",
+    "unicorn/prefer-default-parameters": "error",
+    "unicorn/prefer-includes": "error",
+    "unicorn/prefer-regexp-test": "error",
+    "unicorn/prefer-string-slice": "error",
+    "unicorn/no-useless-length-check": "error",
+    "unicorn/no-useless-spread": "error",
+    "unicorn/prefer-dom-node-dataset": "error",
+    "unicorn/prefer-dom-node-text-content": "error",
+    "unicorn/prefer-logical-operator-over-ternary": "error",
+    "unicorn/throw-new-error": "error",
+    "unicorn/no-zero-fractions": "error",
+    "unicorn/no-unsafe-regex": "error",
+    "unicorn/no-unreadable-iife": "error",
+    "unicorn/no-null": "error"
+  }
+}
