@@ -1,6 +1,10 @@
-### Vite npm starter
+### ⚙️ ts-robot
 
-- [Typescript](https://github.com/microsoft/TypeScript) and [React](https://github.com/facebook/react)
+Typescript fork of https://github.com/matthewp/robot
+
+### Repo technologies
+
+- [Typescript](https://github.com/microsoft/TypeScript)
 - [ESLint](https://github.com/eslint/eslint) and [Prettier](https://github.com/prettier/prettier)
 - [Vitest](https://vitest.dev)
 - [pre-commit and pre-push](https://github.com/toplenboren/simple-git-hooks) hooks
@@ -24,5 +28,5 @@
 - ESLint configuration:
 
   - `.eslintrc.json`: VSCode and vite-checker-plugin
-  - `.eslintrc.dev.json`: pre-commit hook (fast)
-  - `.eslintrc.prod.json`: pre-push hook (slow)
+  - `.eslintrc.dev.json`: pre-commit hook
+  - `.eslintrc.prod.json`: pre-push hook
