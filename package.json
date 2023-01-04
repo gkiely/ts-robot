@@ -1,5 +1,5 @@
 {
-  "name": "vite-npm-starter",
+  "name": "ts-robot",
   "type": "module",
   "private": false,
   "version": "0.0.0",
@@ -22,10 +22,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gkiely/vite-npm-starter.git"
+    "url": "git+https://github.com/gkiely/ts-robot.git"
   },
   "bugs": {
-    "url": "https://github.com/gkiely/vite-npm-starter/issues"
+    "url": "https://github.com/gkiely/ts-robot/issues"
   },
   "keywords": [
     "vite",
