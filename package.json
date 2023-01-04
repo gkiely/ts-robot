@@ -62,9 +62,7 @@
     "pre-commit": "pre-commit",
     "pre-push": "pre-push"
   },
-  "dependencies": {
-    "@gkiely/utils": "^0.1.57"
-  },
+  "dependencies": {},
   "browserslist": {
     "development": [
       "last 1 versions"

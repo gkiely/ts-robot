@@ -1,0 +1,17 @@
+- Convert tests to vitest
+- Get tests to pass
+- Compare types to: https://github.com/matthewp/robot/blob/main/index.d.ts
+- Fix TODO's
+  - Remove all this references
+- Rename transition to `on`
+- Automatically infer events from first argument if it's a string
+  - Require Context and events to be passed in
+- Add support for passing a string and functions to `on`
+- Add support for parallel states
+- Add support for entry
+  - I think this could be done with immediate accepting reduce, I'm yet to use exit state
+- Add support for top level events as second argument
+- Add a subscribe method
+- Write a port to support robot3 in stately
+  - machine -> Xstate-like JSON
+  - JSON -> machine

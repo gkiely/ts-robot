@@ -109,7 +109,6 @@
     "unicorn/throw-new-error": "error",
     "unicorn/no-zero-fractions": "error",
     "unicorn/no-unsafe-regex": "error",
-    "unicorn/no-unreadable-iife": "error",
-    "unicorn/no-null": "error"
+    "unicorn/no-unreadable-iife": "error"
   }
 }
