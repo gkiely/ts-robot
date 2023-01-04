@@ -1,4 +1,6 @@
 /* eslint-disable no-prototype-builtins */
+import produce, { Draft } from 'immer';
+
 /* eslint-disable fp/no-this */
 function valueEnumerable(value: unknown) {
   return { enumerable: true, value };
@@ -108,6 +110,9 @@ function fnType(this: object | null, fn: Fn<object>) {
 const reduceType = {};
 export const reduce = fnType.bind(reduceType) as (fn: Fn<object, unknown>) => Transition;
 export const action = (fn: Fn<object, object>) => reduce((ctx, ev) => Boolean(~fn(ctx, ev) && ctx));
+
+export const update = <C = unknown, E = unknown>(fn: (c: Draft<C>, e: E) => void) =>
+  reduce((c, e) => produce(c, (c) => fn(c as Draft<C>, e as E)));
 
 const guardType = {};
 export const guard = fnType.bind(guardType);

@@ -1,4 +1,4 @@
-import { createMachine, interpret, reduce, state, transition } from '../index';
+import { createMachine, interpret, reduce, state, transition, update } from '../index';
 
 test('basic state change', () => {
   const machine = createMachine({
@@ -16,6 +16,24 @@ test('basic state change', () => {
   const service = interpret(machine);
   service.send('ping');
   expect(service.context).toEqual({ one: 1, two: 2 });
+
+  const machine2 = createMachine({
+    one: state(
+      transition(
+        'ping',
+        'two',
+        update<{ one: number; two: number }>((ctx) => {
+          ctx.one = 1;
+          ctx.two = 2;
+        })
+      )
+    ),
+    two: state(),
+  });
+
+  const service2 = interpret(machine2);
+  service2.send('ping');
+  expect(service2.context).toEqual({ one: 1, two: 2 });
 });
 
 test('if no reducers, the context remains', () => {

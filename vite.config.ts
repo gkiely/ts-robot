@@ -43,6 +43,7 @@ export default defineConfig(() => ({
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
+      external: ['immer'],
       plugins: [
         typescriptPaths({
           preserveExtensions: true,

@@ -62,7 +62,9 @@
     "pre-commit": "pre-commit",
     "pre-push": "pre-push"
   },
-  "dependencies": {},
+  "peerDependencies": {
+    "immer": "^9.0.17"
+  },
   "browserslist": {
     "development": [
       "last 1 versions"

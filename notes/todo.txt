@@ -2,6 +2,7 @@
 - Get tests to pass
 - Compare types to: https://github.com/matthewp/robot/blob/main/index.d.ts
   - Get types working
+- Add update function
 - Fix TODO's
   - Remove all this references
 - Rename transition to `on`
@@ -16,3 +17,11 @@
 - Write a port to support robot3 in stately
   - machine -> Xstate-like JSON
   - JSON -> machine
+
+
+
+Features
+- Apply action/reduce/guard without transitioning
+- Parallel states
+- Support for entry actions via immediate
+- immer update function
