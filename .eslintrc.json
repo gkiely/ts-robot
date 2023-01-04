@@ -12,12 +12,12 @@
   "plugins": ["@typescript-eslint", "regexp", "fp", "unicorn", "promise"],
   "extends": [
     "eslint:recommended",
-    "plugin:escompat/typescript",
     "plugin:regexp/recommended",
     "plugin:promise/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:no-await-in-promise/recommended"
+    "plugin:no-await-in-promise/recommended",
+    "plugin:escompat/recommended"
   ],
   "rules": {
     "no-sequences": "off",
