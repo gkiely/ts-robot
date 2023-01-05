@@ -14,6 +14,10 @@
   - I think this could be done with immediate accepting reduce, I'm yet to use exit state
 - Add support for top level events as second argument
 - Add a subscribe method
+- Does invoke clean up on leaving the state?
+
+
+Laster
 - Write a port to support robot3 in stately
   - machine -> Xstate-like JSON
   - JSON -> machine

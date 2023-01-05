@@ -1,5 +1,5 @@
 import { createMachine, interpret, invoke, reduce, state, transition } from '../index';
-export function assertType<T>(_: unknown): asserts _ is T {}
+import { assertType } from '../helpers';
 
 test('basic state change', () => {
   const machine = createMachine({
