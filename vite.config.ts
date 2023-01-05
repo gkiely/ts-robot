@@ -27,7 +27,7 @@ export default defineConfig(() => ({
   ],
   esbuild: {
     // footer: '/*! licenses: /assets/vendor.LICENSE.txt */',
-    legalComments: 'none',
+    // legalComments: 'none',
   },
   server: {
     watch: {
