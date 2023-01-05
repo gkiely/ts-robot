@@ -1,2 +1,3 @@
 - Rename: ts-robot
 - Convert to existing robot code to ts
+- Convert tests to vitest
