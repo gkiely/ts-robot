@@ -12,13 +12,13 @@ function valueEnumerableWritable(value: unknown) {
 
 type Fn<T = unknown, R = unknown> = (...args: T[]) => R;
 
-type State = {
+export type State = {
   final: boolean;
   enter: (machine: Machine, service: Service, event?: Event) => Machine;
   transitions: Map<string, Transition[]>;
 };
 
-type Machine = {
+export type Machine = {
   current: string;
   context: (context: unknown, event?: Event) => unknown;
   original?: Machine | undefined;
@@ -28,7 +28,7 @@ type Machine = {
   };
   states: Record<string, State>;
 };
-type Service = {
+export type Service = {
   context: object;
   machine: Machine;
   child?: Service | undefined;
@@ -36,7 +36,7 @@ type Service = {
   onChange: (service: Service) => void;
   transitions: Map<string, Transition[]>;
 };
-type Event =
+export type Event =
   | {
       type: string;
       [key: string]: unknown;
@@ -70,7 +70,7 @@ export type Guard<C, E> = {
 
 export const d = {} as {
   _send: (eventName: string, currentStateName: string) => void;
-  _onEnter: (
+  _onEnter?: (
     machine: Machine,
     to: string,
     context: unknown,
@@ -249,7 +249,7 @@ export function invoke(fn: Fn | Machine, ...transitions: Transition[]) {
 }
 
 const machine: Machine = {
-  context: () => {},
+  context: empty,
   current: '',
   states: {},
   get state() {
@@ -274,14 +274,12 @@ export function createMachine(
   contextFn: Context = empty
 ) {
   if (typeof current === 'string') {
-    if (typeof states === 'object' && d._create) d._create(current, states);
     return create(machine, {
       context: valueEnumerable(contextFn),
       current: valueEnumerable(current),
       states: valueEnumerable(states),
     });
   }
-  if (d._create) d._create(Object.keys(current)[0] ?? '', current);
   return create(machine, {
     context: valueEnumerable(states || empty),
     current: valueEnumerable(Object.keys(current)[0]),

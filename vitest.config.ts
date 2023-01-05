@@ -15,7 +15,10 @@ export default defineConfig({
     isolate: false,
     passWithNoTests: true,
     coverage: {
-      enabled: false,
+      enabled: true,
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/tests/**/*.{ts,tsx}'],
+      // '100': true, // 100% coverage
     },
   },
   plugins: [
