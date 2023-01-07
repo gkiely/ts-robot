@@ -1,8 +1,5 @@
-- Get tests to pass
-  - Remaining: logging, debug
 - Compare types to: https://github.com/matthewp/robot/blob/main/index.d.ts
   - Get types working
-- Add update function
 - Fix TODO's
   - Remove all this references
 - Rename transition to `on`

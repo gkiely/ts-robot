@@ -1,3 +1,6 @@
 - Rename: ts-robot
 - Convert to existing robot code to ts
 - Convert tests to vitest
+- Add update function
+- Get tests to pass
+  - Remaining: logging, debug

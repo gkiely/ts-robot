@@ -1,14 +1,7 @@
+/* eslint-disable no-invalid-this */
 /* eslint-disable no-prototype-builtins */
-import produce, { Draft } from 'immer';
-
 /* eslint-disable fp/no-this */
-function valueEnumerable(value: unknown) {
-  return { enumerable: true, value };
-}
-
-function valueEnumerableWritable(value: unknown) {
-  return { enumerable: true, writable: true, value };
-}
+import produce, { Draft } from 'immer';
 
 type Fn<T = unknown, R = unknown> = (...args: T[]) => R;
 
@@ -102,8 +95,15 @@ function stack(
   }, def);
 }
 
+function valueEnumerable(value: unknown) {
+  return { enumerable: true, value };
+}
+
+function valueEnumerableWritable(value: unknown) {
+  return { enumerable: true, writable: true, value };
+}
+
 function fnType(this: object | null, fn: Fn<object>) {
-  // eslint-disable-next-line no-invalid-this
   return create(this, { fn: valueEnumerable(fn) });
 }
 
